@@ -1,0 +1,85 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '2.2.20'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '2.2.20'
+    id 'com.diffplug.spotless' version '7.2.1'
+    id 'com.vanniktech.maven.publish' version '0.36.0'
+}
+
+group 'do.com.ssd.ecfx'
+version '2.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+// Spotless config
+spotless {
+    enforceCheck false
+    format 'misc', {
+        target '.gitignore'
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+    kotlin {
+        ktfmt()
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+test {
+    useJUnitPlatform()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.20"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0"
+    implementation "com.squareup.okhttp3:okhttp:4.12.0"
+    testImplementation "io.kotlintest:kotlintest-runner-junit5:3.4.2"
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = "11"
+        freeCompilerArgs += "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi"
+    }
+}
+
+// Maven Central publishing via Vanniktech plugin
+mavenPublishing {
+    publishToMavenCentral()
+    signAllPublications()
+    coordinates('do.com.ssd.ecfx', 'ecf-dgii-sdk-kotlin', version)
+
+    pom {
+        name = 'ECF DGII SDK Kotlin'
+        description = 'SDK de Kotlin para la API de ECF DGII (comprobantes fiscales electrónicos de República Dominicana)'
+        url = 'https://github.com/SSD-Smart-Software-Development-SRL/ecf_dgii'
+
+        licenses {
+            license {
+                name = 'MIT License'
+                url = 'https://opensource.org/licenses/MIT'
+            }
+        }
+
+        developers {
+            developer {
+                id = 'ssd-srl'
+                name = 'SSD Smart Software Development SRL'
+                email = 'contacto@ssd.com.do'
+            }
+        }
+
+        scm {
+            connection = 'scm:git:git://github.com/SSD-Smart-Software-Development-SRL/ecf_dgii.git'
+            developerConnection = 'scm:git:ssh://github.com/SSD-Smart-Software-Development-SRL/ecf_dgii.git'
+            url = 'https://github.com/SSD-Smart-Software-Development-SRL/ecf_dgii'
+        }
+    }
+}

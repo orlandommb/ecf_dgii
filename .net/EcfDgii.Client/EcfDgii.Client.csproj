@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net5.0;net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>12.0</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>SSDDO.ECF_DGII.SDK</PackageId>
+    <Title>ECF DGII SDK - API Client</Title>
+    <Description>SDK oficial para integrar la facturación electrónica (e-CF) en República Dominicana a través del servicio ECF SSD. Incluye modelos tipados, cliente HTTP generado con Kiota, y un EcfClient de alto nivel con enrutamiento automático, polling y manejo de errores. Registrate en https://ecf.ssd.com.do, certifícate, y emite comprobantes electrónicos sin manejar XML, firmas, ni semillas.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Kiota.Bundle" Version="1.21.2" />
+  </ItemGroup>
+
+</Project>
